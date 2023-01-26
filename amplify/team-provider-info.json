@@ -10,6 +10,14 @@
       "StackName": "amplify-arosaje-dev-100307",
       "StackId": "arn:aws:cloudformation:eu-west-1:030788213331:stack/amplify-arosaje-dev-100307/f09c1cc0-8da0-11ed-90a9-0273bfec4adb",
       "AmplifyAppId": "dkljq3pxacqmf"
+    },
+    "categories": {
+      "auth": {
+        "arosaje": {
+          "googleClientId": "54036305837-7ovpksl0q9hma65g66681qqbivkihp67.apps.googleusercontent.com"
+        },
+        "userPoolGroups": {}
+      }
     }
   }
 }
