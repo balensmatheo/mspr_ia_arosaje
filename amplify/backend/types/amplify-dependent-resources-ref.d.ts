@@ -1,4 +1,11 @@
 export type AmplifyDependentResourcesAttributes = {
+  "api": {
+    "arosaje": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string",
+      "GraphQLAPIKeyOutput": "string"
+    }
+  },
   "auth": {
     "arosaje": {
       "AppClientID": "string",
@@ -14,6 +21,12 @@ export type AmplifyDependentResourcesAttributes = {
       "AdminsGroupRole": "string",
       "BotanistesGroupRole": "string",
       "UsersGroupRole": "string"
+    }
+  },
+  "storage": {
+    "s3arosajestorage5b65df8d": {
+      "BucketName": "string",
+      "Region": "string"
     }
   }
 }

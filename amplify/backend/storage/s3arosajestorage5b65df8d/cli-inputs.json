@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3arosajestorage5b65df8d",
+  "bucketName": "arosaje-storage-5b65df8d",
+  "policyUUID": "902233c5",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

@@ -1,0 +1,10 @@
+type Plant @model @auth(rules: [{allow: public}, {allow: groups, groups: ["Admins"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Botanistes"], operations: [read, create, update, delete]}, {allow: groups, groups: ["Users"], operations: [read, create, update, delete]}]) {
+  id: ID!
+  Nom: String!
+  Type: String!
+  Description: String
+  Localisation: String!
+  Etat: String!
+  Image_URL: AWSURL!
+}
+ 

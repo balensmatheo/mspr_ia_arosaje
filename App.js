@@ -21,6 +21,7 @@ import {useEffect} from "react";
 I18n.putVocabularies(translations);
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import Profil from "./src/components/profil/Profil";
 
 I18n.setLanguage('fr');
 
@@ -96,6 +97,7 @@ function App() {
                         <Drawer.Screen name="Accueil" component={Home} />
                         <Drawer.Screen name="Camera" component={CameraComp} />
                         <Drawer.Screen name="Mes plantes" component={Myplants} />
+                        <Drawer.Screen name="Profil" component={Profil} />
                         <Drawer.Screen name={"Déconnexion"}  component={SignOut}/>
                     </Drawer.Navigator>
                 </NavigationContainer>
@@ -104,4 +106,8 @@ function App() {
     );
 }
 
-export default App;
+export default () => (
+    <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+        <App/>
+    </IconComponentProvider>
+);
