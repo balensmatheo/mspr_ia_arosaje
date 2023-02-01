@@ -17,6 +17,15 @@
           "googleClientId": "54036305837-7ovpksl0q9hma65g66681qqbivkihp67.apps.googleusercontent.com"
         },
         "userPoolGroups": {}
+      },
+      "api": {
+        "arosaje": {}
+      },
+      "storage": {
+        "s3arosajestorage5b65df8d": {}
+      },
+      "predictions": {
+        "identifyLabels5a60fc19": {}
       }
     }
   }

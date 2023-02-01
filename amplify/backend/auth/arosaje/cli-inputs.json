@@ -2,7 +2,7 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "arosajaa2f4850",
     "userPoolName": "arosaje",
     "autoVerifiedAttributes": [
@@ -42,7 +42,7 @@
       "email"
     ],
     "useDefault": "manual",
-    "userPoolGroups": true,
+    "userPoolGroups": false,
     "userPoolGroupList": [
       "Admins",
       "Users",

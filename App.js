@@ -1,16 +1,21 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import {View, Text, Button, Image} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from "./src/components/home/Home";
 import CameraComp from "./src/components/camera/CameraComp";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import Myplants from "./src/components/myplants/Myplants";
-
+import {Button, IconButton} from 'react-native-paper';
 import {Amplify, Auth} from 'aws-amplify'
 import awsconfig from './src/aws-exports'
 import {Authenticator, useAuthenticator, useTheme} from "@aws-amplify/ui-react-native";
+import {
+    Predictions,
+    AmazonAIPredictionsProvider
+} from '@aws-amplify/predictions';
+Amplify.addPluggable(new AmazonAIPredictionsProvider());
 
 Amplify.configure(awsconfig)
 
@@ -19,7 +24,7 @@ import { I18n } from 'aws-amplify';
 import { translations } from '@aws-amplify/ui';
 import {useEffect} from "react";
 I18n.putVocabularies(translations);
-import { IconComponentProvider, Icon } from "@react-native-material/core";
+import {IconComponentProvider, Icon} from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Profil from "./src/components/profil/Profil";
 
@@ -74,6 +79,14 @@ function SignOut() {
     }, []);
     return null;
 }
+
+
+function LogoTitle(props) {
+    return (
+        <Text>Mes plantes</Text>
+    )
+}
+
 function App() {
     const {
         tokens: { colors },
@@ -96,7 +109,15 @@ function App() {
                     <Drawer.Navigator initialRouteName="Home">
                         <Drawer.Screen name="Accueil" component={Home} />
                         <Drawer.Screen name="Camera" component={CameraComp} />
-                        <Drawer.Screen name="Mes plantes" component={Myplants} />
+                        <Drawer.Screen
+                            name="Mes plantes"
+                            component={Myplants}
+                            options={{
+                                headerRight: () => (
+                                    <IconButton style={{display: "flex"}} size={20} icon="reload" mode="text"/>
+                                ),
+                            }}
+                        />
                         <Drawer.Screen name="Profil" component={Profil} />
                         <Drawer.Screen name={"Déconnexion"}  component={SignOut}/>
                     </Drawer.Navigator>

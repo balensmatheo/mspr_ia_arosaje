@@ -1,6 +1,6 @@
 import {Auth} from "aws-amplify";
 import {useEffect, useState} from "react";
-import {StyleSheet, View} from "react-native";
+import {Image, StyleSheet, View} from "react-native";
 import {Link} from "@react-navigation/native";
 import {AppBar, Backdrop, BackdropSubheader, Box, Icon} from "@react-native-material/core";
 import {isHoverEnabled} from "react-native/Libraries/Pressability/HoverState";
@@ -10,6 +10,7 @@ export default function Profil(){
     useEffect(() => {
         getAttributes().then(r => console.log(r));
     }, []);
+
     const [user, setUser] = useState(null);
     const [checked, setChecked] = useState(false);
     const [revealed, setRevealed] = useState(false);

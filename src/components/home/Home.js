@@ -1,7 +1,7 @@
 import {Storage as Strg} from "aws-amplify";
-import {View, Image, Text, StyleSheet, Alert, ToastAndroid} from "react-native";
-import { Stack, Button } from "@react-native-material/core";
-import {Checkbox, IconButton} from 'react-native-paper';
+import {View, Image, Text, StyleSheet, Alert} from "react-native";
+import { Stack } from "@react-native-material/core";
+import {Button, Checkbox, IconButton} from 'react-native-paper';
 import * as MediaLibrary from "expo-media-library";
 import {useState} from "react";
 import {launchImageLibrary} from "react-native-image-picker";
@@ -15,10 +15,8 @@ export default function Home({navigation}) {
     const [checked, setChecked] = useState(false);
     const [image, setImage] = useState(null);
     const [nomPlante, setNomPlante] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const setToastMsg = (msg) => {
-        ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
-    }
 
 
         const pickImage = async () => {
@@ -33,13 +31,14 @@ export default function Home({navigation}) {
             if (!result.canceled) {
                 setImage(result.assets[0].uri);
             } else {
-                setToastMsg("Aucune image selectionnée");
+                console.log("Image annulée");
             }
         };
 
     async function saveImage() {
         try{
             if (image) {
+                setLoading(true)
                 const response = await fetch(image);
                 const blob = await response.blob();
                 // Envoie de l'image vers un bucket S3
@@ -47,12 +46,14 @@ export default function Home({navigation}) {
                     level: "protected",
                     contentType: "image/jpg",
                 }).then(() => {
-                    setToastMsg("Image envoyée avec succès");
-                    setImage(null);
-                    navigation.navigate("Mes plantes")
+                    setImage(undefined);
+                    setNomPlante("");
+                    setLoading(false);
+                    Alert.alert("Image sauvegardée");
                 });
             }
         } catch (e) {
+            setLoading(false);
             console.log(e)
         }
     }
@@ -66,11 +67,17 @@ export default function Home({navigation}) {
             />
             <Text style={styles.welcome}>Bienvenue dans l'application A'rosa-je</Text>
             <View style={styles.buttonContainer}>
-                <IconButton icon={"camera"} onPress={() => navigation.navigate("Camera")} title={"Prendre une photo"}/>
-                <IconButton icon={"upload"} onPress={() => pickImage()} title={"Importer a partir de la galerie"}/>
+                <Button icon={"camera"} onPress={() => navigation.navigate("Camera")} title={"Prendre une photo"}>Prendre une photo</Button>
+                <Button icon={"upload"} onPress={() => pickImage()} title={"Importer a partir de la galerie"}>Importer</Button>
             </View>
              <View>
-                 <Image source={{uri: image}} style={{width: 200, height: 200}}/>
+                 {
+                        image ?
+                            <Image source={{uri: image}} style={{width: 200, height: 200}}/>
+                            :
+                            undefined
+                 }
+
              </View>
              {
                  image ?
@@ -83,23 +90,34 @@ export default function Home({navigation}) {
                                  value={nomPlante}
                                  onChangeText={nomPlante => setNomPlante(nomPlante)}
                              />
-                             <Button
-                                 variant="outlined"
-                                 title="Delete"
-                                 onPress={() => setImage(null) }
-                                 leading={props => <Icon name="delete" {...props} />}
-                             />
-                             <Button onPress={() => saveImage()} title="Send" trailing={props => <Icon name="send" {...props} />} />
+                             <Button icon={"delete"} onPress={() => setImage(null)}>Supprimer</Button>
+                             <Button loading={loading} icon={"content-save"} onPress={() => saveImage()}>Sauvegarder</Button>
                          </Stack>
                      </View>
                      :
                      undefined
              }
+             <View style={styles.footer}>
+                 <Text style={styles.footerText}>A'rosa-je - 2023 ©</Text>
+             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    footer : {
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: 36
+    },
+    footerText: {
+        textAlign: 'center',
+        textTransform: 'uppercase',
+        fontWeight: 'bold',
+        letterSpacing: 2,
+        color: '#333333',
+        marginBottom: 5,
+    },
     container: {
         flex: 1,
         alignItems: 'center',

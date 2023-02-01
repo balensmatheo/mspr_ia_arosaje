@@ -23,6 +23,12 @@ export type AmplifyDependentResourcesAttributes = {
       "UsersGroupRole": "string"
     }
   },
+  "predictions": {
+    "identifyLabels5a60fc19": {
+      "region": "string",
+      "type": "string"
+    }
+  },
   "storage": {
     "s3arosajestorage5b65df8d": {
       "BucketName": "string",

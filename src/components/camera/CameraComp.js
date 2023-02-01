@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Camera } from 'expo-camera';
 import { shareAsync } from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
+import {Stack} from "@react-native-material/core";
 
 export default function CameraComp() {
     let cameraRef = useRef();
@@ -21,9 +22,9 @@ export default function CameraComp() {
     }, []);
 
     if (hasCameraPermission === undefined) {
-        return <Text>Requesting permissions...</Text>
+        return <Text>Demande des permissions</Text>
     } else if (!hasCameraPermission) {
-        return <Text>Permission for camera not granted. Please change this in settings.</Text>
+        return <Text>Vous n'avez pas les permissions nécessaires</Text>
     }
 
     let takePic = async () => {
@@ -52,10 +53,12 @@ export default function CameraComp() {
 
         return (
             <SafeAreaView style={styles.container}>
-                <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
-                <Button title="Share" onPress={sharePic} />
-                {hasMediaLibraryPermission ? <Button title="Save" onPress={savePhoto} /> : undefined}
-                <Button title="Discard" onPress={() => setPhoto(undefined)} />
+                <Stack>
+                    <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
+                    <Button title="Share" onPress={sharePic} />
+                    {hasMediaLibraryPermission ? <Button title="Save" onPress={savePhoto} /> : undefined}
+                    <Button title="Discard" onPress={() => setPhoto(undefined)} />
+                </Stack>
             </SafeAreaView>
         );
     }

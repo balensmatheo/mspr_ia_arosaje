@@ -96,6 +96,14 @@
       ]
     }
   },
+  "predictions": {
+    "identifyLabels5a60fc19": {
+      "dependsOn": [],
+      "identifyType": "identifyLabels",
+      "providerPlugin": "awscloudformation",
+      "service": "Rekognition"
+    }
+  },
   "storage": {
     "s3arosajestorage5b65df8d": {
       "dependsOn": [],
