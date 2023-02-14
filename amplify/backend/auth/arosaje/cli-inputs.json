@@ -48,7 +48,7 @@
       "Users",
       "Botanistes"
     ],
-    "adminQueries": true,
+    "adminQueries": false,
     "thirdPartyAuth": true,
     "authProviders": [
       "accounts.google.com"

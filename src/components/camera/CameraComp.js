@@ -5,6 +5,7 @@ import { Camera } from 'expo-camera';
 import { shareAsync } from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
 import {Stack} from "@react-native-material/core";
+import {Button} from "react-native-paper";
 
 export default function CameraComp() {
     let cameraRef = useRef();
@@ -55,9 +56,9 @@ export default function CameraComp() {
             <SafeAreaView style={styles.container}>
                 <Stack>
                     <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
-                    <Button title="Share" onPress={sharePic} />
-                    {hasMediaLibraryPermission ? <Button title="Save" onPress={savePhoto} /> : undefined}
-                    <Button title="Discard" onPress={() => setPhoto(undefined)} />
+                    <Button onPress={sharePic} icon={"share"}>Partager</Button>
+                    {hasMediaLibraryPermission ? <Button icon="content-save" onPress={savePhoto}>Sauvegarder</Button> : undefined}
+                    <Button icon="delete" onPress={() => setPhoto(undefined)}>Supprimer</Button>
                 </Stack>
             </SafeAreaView>
         );
@@ -75,16 +76,26 @@ export default function CameraComp() {
 
 const styles = StyleSheet.create({
     container: {
+        display: "flex",
+        flexDirection: "row",
         flex: 1,
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+
     },
     buttonContainer: {
         backgroundColor: '#fff',
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
+        marginBottom: 50,
+        width: 100,
+        height: 100,
+        borderRadius: "50%"
     },
     preview: {
-        alignSelf: 'stretch',
-        flex: 1
+        flex: 1,
+        resizeMode: "stretch",
+        width: 400,
+        height: 400
     }
 });

@@ -1,14 +1,9 @@
 import {Storage as Strg} from "aws-amplify";
 import {View, Image, Text, StyleSheet, Alert} from "react-native";
 import { Stack } from "@react-native-material/core";
-import {Button, Checkbox, IconButton} from 'react-native-paper';
-import * as MediaLibrary from "expo-media-library";
 import {useState} from "react";
-import {launchImageLibrary} from "react-native-image-picker";
 import * as ImagePicker from "expo-image-picker";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import {TextField} from "@aws-amplify/ui-react-native/src/primitives";
-import { TextInput } from 'react-native-paper';
+import {Button, TextInput} from 'react-native-paper';
 
 export default function Home({navigation}) {
 
@@ -67,8 +62,8 @@ export default function Home({navigation}) {
             />
             <Text style={styles.welcome}>Bienvenue dans l'application A'rosa-je</Text>
             <View style={styles.buttonContainer}>
-                <Button icon={"camera"} onPress={() => navigation.navigate("Camera")} title={"Prendre une photo"}>Prendre une photo</Button>
-                <Button icon={"upload"} onPress={() => pickImage()} title={"Importer a partir de la galerie"}>Importer</Button>
+                <Button mode={"contained"} icon={"camera"} onPress={() => navigation.navigate("Camera")} title={"Prendre une photo"}>Prendre une photo</Button>
+                <Button mode={"contained"} icon={"upload"} onPress={() => pickImage()} title={"Importer a partir de la galerie"}>Importer</Button>
             </View>
              <View>
                  {
@@ -120,13 +115,16 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
+        width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: '#F5FCFF',
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
+        alignSelf: "flex-end",
+        width: '100%',
+        padding: 10,
         alignItems: 'center',
     },
     logo: {

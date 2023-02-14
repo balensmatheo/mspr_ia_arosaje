@@ -1,10 +1,12 @@
 import {FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 import {useEffect, useState} from "react";
-import {Predictions, Storage as Strg} from "aws-amplify";
+import {Storage as Strg} from "aws-amplify";
 import { VStack} from "@react-native-material/core";
 import {Button, Card, Dialog, IconButton, MD3Colors, Portal, Provider} from "react-native-paper";
 import * as React from "react";
 import {Ionicons} from "@expo/vector-icons";
+import {hide} from "react-native/Libraries/Utilities/LoadingView";
+import {Predictions} from "@aws-amplify/predictions/lib";
 
 export default function Myplants({navigation}){
     useEffect(() => {
@@ -40,15 +42,17 @@ export default function Myplants({navigation}){
     }
 
     function identifyPlant(item) {
-        Predictions.identify({
-            entities: {
-                source: {
-                    key: keys[0].key,
+        if(item.item !== undefined){
+            Predictions.identify({
+                text: {
+                    source: {
+                        key: item.item.key,
+                        level: 'protected'
+                    },
+                    format: "PLAIN"
                 }
-            }
-        }).then(result => {
-            console.log(result);
-        }).catch(err => console.log(err));
+            }).then(r => console.log(r));
+        }
     }
 
     function reload(){
@@ -57,12 +61,22 @@ export default function Myplants({navigation}){
         setLoading(false)
     }
 
+    const [toDelete, setToDelete] = useState("");
     async function deleteImage(item) {
         if(item.item !== undefined){
-            Strg.remove(item.item.key, {level: 'protected'}).then(() => {
+            setToDelete(item.item.key);
+            showDialog();
+        }
+    }
+
+    async function deleteImageConfirm() {
+        try {
+            await Strg.remove(toDelete, {level: 'protected'}).then(() => {
+                hideDialog();
                 reload();
-                setRequest(false);
-            }).catch(e => console.log(e));
+            });
+        } catch (e) {
+            console.log(e);
         }
     }
 
@@ -71,34 +85,32 @@ export default function Myplants({navigation}){
             <SafeAreaView>
                 {
                     plants.length > 0 ?
-                        <FlatList style={styles.scrollist} data={plants} renderItem={
-                            (item, index) => (
-                                <View style={styles.container}>
-                                    <Card elevation={4} key={index} style={styles.card}>
-                                        <Card.Content><Text style={styles.cardTitle}>{item.item.key}</Text></Card.Content>
-                                        <Card.Cover source={{uri: item.item.url}} style={styles.imageStyle}/>
-                                        <Card.Actions style={styles.buttonContainer}>
-                                            <IconButton color={MD3Colors.primary40} size={25} onPress={() => {
-                                                identifyPlant(item)
-                                            }}/>
-                                            <IconButton icon="delete" onPress={() => showDialog()}/>
+                            <FlatList
+                                data={plants}
+                                renderItem={item => (
+                                    <Card style={{margin: 10}}>
+                                        <Card.Title title={item.item.key} subtitle="Plante" left={(props) => <Ionicons {...props} name="leaf-outline" size={24} color="green" />} />
+                                        <Card.Cover source={{uri: item.item.url}} />
+                                        <Card.Actions>
+                                            <Button onPress={() => identifyPlant(item)}>Identifier</Button>
+                                            <Button onPress={() => deleteImage(item)}>Supprimer</Button>
                                         </Card.Actions>
+                                        <Portal>
+                                            <Dialog visible={request} onDismiss={hideDialog}>
+                                                <Dialog.Title>Vous allez supprimer {toDelete}</Dialog.Title>
+                                                <Dialog.Content>
+                                                    <Text variant="bodyMedium">La suppression est irréversible</Text>
+                                                </Dialog.Content>
+                                                <Dialog.Actions>
+                                                    <Button onPress={hideDialog}>Annuler</Button>
+                                                    <Button onPress={() => deleteImageConfirm()}>Supprimer</Button>
+                                                </Dialog.Actions>
+                                            </Dialog>
+                                        </Portal>
                                     </Card>
-                                    <Portal>
-                                        <Dialog visible={request} onDismiss={hideDialog}>
-                                            <Dialog.Title>Vous allez supprimer</Dialog.Title>
-                                            <Dialog.Content>
-                                                <Text variant="bodyMedium">La suppression est irréversible</Text>
-                                            </Dialog.Content>
-                                            <Dialog.Actions>
-                                                <Button onPress={hideDialog}>Annuler</Button>
-                                                <Button onPress={() => deleteImage(item)}>Confirmer</Button>
-                                            </Dialog.Actions>
-                                        </Dialog>
-                                    </Portal>
-                                </View>
-                            )
-                        }/>
+                                )}
+                                keyExtractor={item => item.key}
+                            />
                         :
                         <View style={styles.errorImage}>
                             <Text style={styles.text}>Vous n'avez pas encore de plantes :(</Text>
