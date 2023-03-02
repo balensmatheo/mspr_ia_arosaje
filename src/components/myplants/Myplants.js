@@ -62,7 +62,7 @@ export default function Myplants({navigation}){
                 let plantConf = 0;
                 let index = 0;
                 labels.map((plante, idx) => {
-                    if(plante.metadata.confidence>plantConf && plante.metadata.parents.length >=2){
+                    if(plante.metadata.confidence>plantConf && plante.metadata.parents.length >=2 && plante.metadata.parents.includes("Plant")){
                         plantConf = plante.metadata.confidence;
                         index = idx;
                     }
