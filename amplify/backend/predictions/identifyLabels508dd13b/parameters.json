@@ -1,6 +1,6 @@
 {
-    "resourceName": "identifyLabels5a60fc19",
-    "identifyPolicyName": "identifyPolicy5a60fc19",
+    "resourceName": "identifyLabels508dd13b",
+    "identifyPolicyName": "identifyPolicy508dd13b",
     "authRoleName": {
         "Ref": "AuthRoleName"
     },

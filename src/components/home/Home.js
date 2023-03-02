@@ -18,11 +18,10 @@ export default function Home({navigation}) {
             // No permissions request is necessary for launching the image library
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
-                allowsEditing: true,
+
                 aspect: [4, 3],
                 quality: 1,
             });
-
             if (!result.canceled) {
                 setImage(result.assets[0].uri);
             } else {
@@ -33,9 +32,16 @@ export default function Home({navigation}) {
     async function saveImage() {
         try{
             if (image) {
-                setLoading(true)
                 const response = await fetch(image);
                 const blob = await response.blob();
+
+                await Strg.put(nomPlante + ".jpg", image, {
+                    level: 'protected',
+                    customPrefix: {
+                        protected: 'protected/predictions/index-faces/',
+                    }
+                }).then(response => console.log(response));
+                setLoading(true)
                 // Envoie de l'image vers un bucket S3
                 const result = await Strg.put(nomPlante + '.jpg', blob, {
                     level: "protected",

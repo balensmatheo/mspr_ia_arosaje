@@ -1,7 +1,7 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, NavigatorIOS} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from "./src/components/home/Home";
 import CameraComp from "./src/components/camera/CameraComp";
@@ -15,6 +15,7 @@ import {
     Predictions,
     AmazonAIPredictionsProvider
 } from '@aws-amplify/predictions';
+Amplify.configure(awsconfig);
 Amplify.addPluggable(new AmazonAIPredictionsProvider());
 
 Amplify.configure(awsconfig)
@@ -27,6 +28,8 @@ I18n.putVocabularies(translations);
 import {IconComponentProvider, Icon} from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Profil from "./src/components/profil/Profil";
+import PlantDetails from "./src/components/plantdetails/PlantDetails";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
 I18n.setLanguage('fr');
 
@@ -92,6 +95,7 @@ function App() {
         tokens: { colors },
     } = useTheme();
 
+    const Stack = createNativeStackNavigator();
     return (
         <Authenticator.Provider>
             <Authenticator
@@ -106,9 +110,14 @@ function App() {
                 Header={MyAppHeader}
             >
                 <NavigationContainer>
-                    <Drawer.Navigator initialRouteName="Home">
-                        <Drawer.Screen name="Accueil" component={Home} />
-                        <Drawer.Screen name="Camera" component={CameraComp} />
+                    <Drawer.Navigator initialRouteName="Home" >
+
+                        <Drawer.Screen name="Accueil" component={Home} options={{
+                            drawerActiveTintColor: "#009206",
+                        }}/>
+                        <Drawer.Screen name="Camera" component={CameraComp} options={{
+                            drawerActiveTintColor: "#009206",
+                        }} />
                         <Drawer.Screen
                             name="Mes plantes"
                             component={Myplants}
@@ -116,10 +125,15 @@ function App() {
                                 headerRight: () => (
                                     <IconButton style={{display: "flex"}} size={20} icon="reload" mode="text"/>
                                 ),
+                                drawerActiveTintColor: "#009206",
                             }}
                         />
-                        <Drawer.Screen name="Profil" component={Profil} />
-                        <Drawer.Screen name={"Déconnexion"}  component={SignOut}/>
+                        <Drawer.Screen name="Profil" component={Profil} options={{
+                            drawerActiveTintColor: "#009206",
+                        }} />
+                        <Drawer.Screen name={"Déconnexion"}  component={SignOut} options={{
+                            drawerActiveTintColor: "#a9000c",
+                        }} />
                     </Drawer.Navigator>
                 </NavigationContainer>
             </Authenticator>

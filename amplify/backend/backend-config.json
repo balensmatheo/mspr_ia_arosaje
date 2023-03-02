@@ -85,7 +85,18 @@
       "service": "Cognito-UserPool-Groups"
     }
   },
-  "function": {},
+  "function": {
+    "RekognitionIndexFacesTrigger462dfc4d": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "RekognitionIndexFacesTriggercb853a61": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
   "parameters": {
     "AMPLIFY_auth_arosaje_googleClientId": {
       "usedBy": [
@@ -94,10 +105,81 @@
           "resourceName": "arosaje"
         }
       ]
+    },
+    "AMPLIFY_function_RekognitionIndexFacesTrigger462dfc4d_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "RekognitionIndexFacesTrigger462dfc4d"
+        }
+      ]
+    },
+    "AMPLIFY_function_RekognitionIndexFacesTrigger462dfc4d_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "RekognitionIndexFacesTrigger462dfc4d"
+        }
+      ]
+    },
+    "AMPLIFY_function_RekognitionIndexFacesTriggercb853a61_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "RekognitionIndexFacesTriggercb853a61"
+        }
+      ]
+    },
+    "AMPLIFY_function_RekognitionIndexFacesTriggercb853a61_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "RekognitionIndexFacesTriggercb853a61"
+        }
+      ]
     }
   },
   "predictions": {
-    "identifyLabels5a60fc19": {
+    "identifyEntities08568112": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ],
+          "category": "function",
+          "resourceName": "RekognitionIndexFacesTriggercb853a61"
+        },
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "s3arosajestorage5b65df8d"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ],
+          "category": "function",
+          "resourceName": "RekognitionIndexFacesTrigger462dfc4d"
+        },
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "s3arosajestorage5b65df8d"
+        }
+      ],
+      "identifyType": "identifyEntities",
+      "providerPlugin": "awscloudformation",
+      "service": "Rekognition"
+    },
+    "identifyLabels508dd13b": {
       "dependsOn": [],
       "identifyType": "identifyLabels",
       "providerPlugin": "awscloudformation",
@@ -106,7 +188,17 @@
   },
   "storage": {
     "s3arosajestorage5b65df8d": {
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ],
+          "category": "function",
+          "resourceName": "RekognitionIndexFacesTrigger462dfc4d"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "S3"
     }

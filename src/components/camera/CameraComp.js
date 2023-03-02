@@ -7,7 +7,7 @@ import * as MediaLibrary from 'expo-media-library';
 import {Stack} from "@react-native-material/core";
 import {Button} from "react-native-paper";
 
-export default function CameraComp() {
+export default function CameraComp({navigation}) {
     let cameraRef = useRef();
     const [hasCameraPermission, setHasCameraPermission] = useState();
     const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
@@ -66,9 +66,7 @@ export default function CameraComp() {
 
     return (
             <Camera style={styles.container} ref={cameraRef}>
-                <View style={styles.buttonContainer}>
-                    <Button title="Capture" onPress={takePic}/>
-                </View>
+                <Button  mode={'contained-tonal'} style={styles.buttonContainer} title="Capture" onPress={takePic}></Button>
                 <StatusBar style="auto"/>
             </Camera>
     );
@@ -84,12 +82,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
+    textButton: {
+        color: '#000000',
+        fontSize: 10,
+        fontWeight: 'bold',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: "red"
+    },
+
     buttonContainer: {
-        backgroundColor: '#fff',
+        backgroundColor: '#ffffff',
         alignSelf: 'flex-end',
-        marginBottom: 50,
-        width: 100,
-        height: 100,
+        marginBottom: 60,
+        borderStyle: 'solid',
+        borderWidth: 5,
+        borderColor: '#cccccc',
         borderRadius: "50%"
     },
     preview: {

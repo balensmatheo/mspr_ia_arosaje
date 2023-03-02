@@ -8,5 +8,25 @@
     "CREATE_AND_UPDATE",
     "READ",
     "DELETE"
-  ]
+  ],
+  "adminTriggerFunction": {
+    "tag": "adminTriggerFunction",
+    "category": "predictions",
+    "permissions": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ],
+    "triggerFunction": "RekognitionIndexFacesTrigger462dfc4d",
+    "triggerEvents": [
+      "s3:ObjectCreated:*",
+      "s3:ObjectRemoved:*"
+    ],
+    "triggerPrefix": [
+      {
+        "prefix": "protected/predictions/index-faces/",
+        "prefixTransform": "NONE"
+      }
+    ]
+  }
 }

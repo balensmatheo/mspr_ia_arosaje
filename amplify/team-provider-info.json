@@ -25,7 +25,19 @@
         "s3arosajestorage5b65df8d": {}
       },
       "predictions": {
-        "identifyLabels5a60fc19": {}
+        "identifyEntities08568112": {},
+        "identifyLabels508dd13b": {}
+      },
+      "function": {
+        "RekognitionIndexFacesTriggercb853a61": {
+          "deploymentBucketName": "amplify-arosaje-dev-100307-deployment",
+          "s3Key": "amplify-builds/RekognitionIndexFacesTriggercb853a61-52632b4b4a7757597464-build.zip"
+        },
+        "RekognitionIndexFacesTrigger462dfc4d": {
+          "deploymentBucketName": "amplify-arosaje-dev-100307-deployment",
+          "s3Key": "amplify-builds/RekognitionIndexFacesTrigger462dfc4d-52632b4b4a7757597464-build.zip"
+        },
+        "arosajee1fc787c": {}
       }
     }
   }

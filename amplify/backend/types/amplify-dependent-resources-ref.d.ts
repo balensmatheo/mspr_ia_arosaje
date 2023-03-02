@@ -23,8 +23,30 @@ export type AmplifyDependentResourcesAttributes = {
       "UsersGroupRole": "string"
     }
   },
+  "function": {
+    "RekognitionIndexFacesTrigger462dfc4d": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "RekognitionIndexFacesTriggercb853a61": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    }
+  },
   "predictions": {
-    "identifyLabels5a60fc19": {
+    "identifyEntities08568112": {
+      "celebrityDetectionEnabled": "string",
+      "collectionId": "string",
+      "maxEntities": "string",
+      "region": "string"
+    },
+    "identifyLabels508dd13b": {
       "region": "string",
       "type": "string"
     }
